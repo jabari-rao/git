@@ -1,0 +1,949 @@
+# 1. Verify Git Installation
+git --version
+
+# 2. Configure Git (run once)
+git config --global user.name "jabari-rao"
+git config --global user.email "jabezananiaspaul.27csa@licet.ac.in"
+git config --global --list
+
+
+# 3. Create Project Folder
+mkdir myproject
+cd myproject
+notepad sample.txt
+
+
+# 4. Initialize Repository
+git init
+git status
+
+
+# 5. Add Files
+git add .
+git status
+
+
+# 6. Commit
+git commit -m "Initial commit"
+git log
+
+
+# 7. Rename Branch to main
+git branch -M main
+
+
+# 8. Connect to GitHub (CHANGE THIS URL)
+git remote add origin https://github.com/YOUR-USERNAME/YOUR-REPO.git
+git remote -v
+
+# Push (make sure credentials are correct)
+git push -u origin main
+
+
+# 9. Create Tag
+git tag -a v1.0 -m "First version"
+git tag
+git push origin v1.0
+
+
+# 10. Branching & Merging
+
+# Create dev branch
+git checkout -b dev
+
+# List branches
+git branch
+
+# Switch to main
+git switch main
+
+# Push dev branch
+git push origin dev
+
+# Merge dev into main
+git merge dev
+
+# Pull latest changes
+git pull origin main
+
+
+# 11. Merge Conflict Demo
+
+# Step 1: Change in main
+git switch main
+notepad sample.txt
+git add .
+git commit -m "Main change"
+
+# Step 2: Change in dev
+git switch dev
+notepad sample.txt
+git add .
+git commit -m "Dev change"
+
+# Step 3: Merge (will cause conflict)
+git switch main
+git merge dev
+
+
+# Resolve conflict manually in file, then:
+git add .
+git commit -m "Resolved merge conflict"
+
+MAVEN 
+
+# STEP 1: Go to your project folder
+
+cd C:\Users\Jabez\OneDrive\Desktop\mvn\demo
+
+# STEP 2: Create Controller File
+
+# Location:
+
+# src/main/java/com/example/demo/HelloController.java
+
+package com.example.demo;
+
+import org.springframework.web.bind.annotation.*;
+
+@RestController
+public class HelloController {
+    @GetMapping("/")
+    public String home() { return "Hello, Spring Boot is working!"; }
+}
+
+# STEP 3: (If needed) set port
+
+# File: src/main/resources/application.properties
+
+server.port=8081
+
+# STEP 4: Run application
+
+mvn spring-boot:run
+
+# STEP 5: Open in browser
+
+http://localhost:8081/
+
+
+GRADLE
+
+# SPRING BOOT + GRADLE HELLO WORLD (ALL-IN-ONE)
+
+# ================================
+
+# 1. CREATE PROJECT
+
+# ================================
+
+mkdir demo
+cd demo
+
+# ================================
+
+# 2. INITIALIZE GRADLE
+
+# ================================
+
+gradle init
+
+# Choose:
+
+# application
+
+# Java
+
+# Groovy
+
+# ================================
+
+# 3. UPDATE build.gradle
+
+# ================================
+
+# File: build.gradle
+
+plugins {
+id 'org.springframework.boot' version '3.2.0'
+id 'io.spring.dependency-management' version '1.1.4'
+id 'java'
+}
+
+group = 'com.example'
+version = '0.0.1-SNAPSHOT'
+
+repositories {
+mavenCentral()
+}
+
+dependencies {
+implementation 'org.springframework.boot:spring-boot-starter-web'
+}
+
+# ================================
+
+# 4. CREATE MAIN JAVA FILE
+
+# ================================
+
+# File: src/main/java/com/example/demo/App.java
+
+package com.example.demo;
+
+import org.springframework.boot.*;
+import org.springframework.boot.autoconfigure.*;
+import org.springframework.web.bind.annotation.*;
+
+@SpringBootApplication
+@RestController
+public class App {
+
+```
+public static void main(String[] args) {
+    SpringApplication.run(App.class, args);
+}
+
+@GetMapping("/api")
+public String hello() {
+    return "Hello World from API";
+}
+```
+
+}
+
+# ================================
+
+# 5. CREATE HTML FILE
+
+# ================================
+
+# File: src/main/resources/static/index.html
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <title>Hello</title>
+</head>
+<body>
+    <h1>Hello World 🌍</h1>
+    <p>Spring Boot is working!</p>
+</body>
+</html>
+
+# ================================
+
+# 6. RUN APPLICATION
+
+# ================================
+
+gradle bootRun
+
+# ================================
+
+# 7. OPEN IN BROWSER
+
+# ================================
+
+# HTML Page:
+
+http://localhost:8080/
+
+# API:
+
+http://localhost:8080/api
+
+# ================================
+
+# END
+
+# ================================
+
+JENKINS
+
+# Jenkins CI/CD Pipeline Setup (Freestyle Jobs)
+
+## Prerequisites
+
+Before starting, ensure the following are installed and configured:
+
+* Java (JDK 8 or higher)
+* Jenkins (running on http://localhost:8080)
+* Maven
+* Git
+* A Git repository containing a Maven project (with `pom.xml`)
+
+---
+
+## Step 1: Launch Jenkins
+
+1. Start Jenkins.
+2. Open a web browser and go to:
+   http://localhost:8080
+3. Log in with your credentials.
+
+---
+
+## Step 2: Create Job 1 (Compile Stage)
+
+1. Click **New Item** on the Jenkins dashboard.
+2. Enter the name: `job1`.
+3. Select **Freestyle Project** and click **OK**.
+
+### Configuration:
+
+* **Source Code Management**:
+
+  * Select **Git**
+  * Enter repository URL
+  * Add credentials if required
+
+* **Build Triggers**:
+
+  * Select **Poll SCM**
+  * Schedule:
+
+    ---
+
+* **Build**:
+
+  * Add build step → **Invoke top-level Maven targets**
+  * Goals:
+    compile
+
+4. Click **Save**
+
+---
+
+## Step 3: Create Job 2 (Test Stage)
+
+1. Click **New Item**
+2. Enter the name: `job2`
+3. Select **Freestyle Project** → Click **OK**
+
+### Configuration:
+
+* **Source Code Management**:
+
+  * Same Git repository
+
+* **Build Triggers**:
+
+  * Select **Poll SCM**
+  * Schedule:
+
+    ---
+
+* **Build**:
+
+  * Add build step → **Invoke top-level Maven targets**
+  * Goals:
+    test
+
+4. Click **Save**
+
+---
+
+## Step 4: Configure Post-Build Action (Link Jobs)
+
+1. Open **job1**
+2. Click **Configure**
+3. Scroll to **Post-build Actions**
+
+### Add:
+
+* Select **Build other projects**
+* Enter:
+  job2
+* Enable:
+  ✔ Trigger only if build is stable
+
+4. Click **Save**
+
+---
+
+## Step 5: Create Pipeline View
+
+1. Go to Jenkins Dashboard
+2. Click **"+" (New View)**
+3. Enter name:
+   pipeline2
+4. Select **Build Pipeline View**
+5. Click **Create**
+
+### Configure:
+
+* **Initial Job**:
+  job1
+* **Display Options**:
+  ✔ Based on upstream/downstream relationship
+* **Number of displayed builds**:
+  1
+* **Refresh frequency**:
+  3 seconds
+
+6. Click **Save**
+
+---
+
+## Step 6: Run the Pipeline
+
+1. Open **job1**
+2. Click **Build Now**
+
+### Execution Flow:
+
+job1 (compile) → job2 (test)
+
+3. Open **pipeline2 view** to see visual pipeline execution
+
+---
+
+## Troubleshooting
+
+### Common Issues:
+
+1. **Maven not found**
+
+   * Configure in: Manage Jenkins → Global Tool Configuration
+
+2. **Git errors**
+
+   * Verify repository URL and credentials
+
+3. **Missing pom.xml**
+
+   * Ensure project is a valid Maven project
+
+4. **Java issues**
+
+   * Set JAVA_HOME correctly
+
+5. **Jobs failing**
+
+   * Check Console Output for detailed errors
+
+---
+
+## Optional Test
+
+To verify Jenkins setup:
+
+* Replace build step with:
+  echo "Hello Jenkins"
+
+If this works, Jenkins is configured correctly.
+
+---
+
+## Conclusion
+
+This setup creates a simple CI pipeline where:
+
+* `job1` compiles the code
+* `job2` runs tests after successful compilation
+* Pipeline view shows execution flow visually
+
+---
+
+
+ANSIBLE
+
+# Install Ansible
+sudo apt update
+sudo apt install software-properties-common -y
+sudo add-apt-repository --yes --update ppa:ansible/ansible
+sudo apt install ansible -y
+ansible --version
+
+# Switch to user jabex (if needed)
+su - jabex
+
+# SSH setup
+ssh-keygen -t rsa -C "devops default"
+sudo apt install openssh-server -y
+sudo systemctl enable ssh
+sudo systemctl start ssh
+ssh-copy-id jabex@10.0.2.15
+ssh jabex@10.0.2.15
+
+# Create inventory
+nano inventory
+
+# Create playbook
+nano playbook.yaml
+
+# Test connection
+ansible all -i inventory -m ping
+
+# Run playbook
+ansible-playbook -i inventory playbook.yaml --ask-become-pass
+
+
+playbook.yaml
+
+- hosts: servers
+  become: yes
+  tasks:
+    - name: Install Apache
+      apt:
+        name: apache2
+        state: present
+        update_cache: yes
+
+    - name: Start Apache
+      service:
+        name: apache2
+        state: started
+        enabled: yes
+
+    - name: Deploy Web Page
+      copy:
+        content: "<h1>Hello from Ansible</h1>"
+        dest: /var/www/html/index.html
+
+azure_devops_pipeline_guide.tx
+
+STEP-BY-STEP GUIDE: AZURE DEVOPS CI PIPELINE WITH MAVEN + SELF-HOSTED AGENT
+
+--------------------------------------------------
+PART 1: CREATE AZURE DEVOPS PROJECT
+--------------------------------------------------
+1. Go to https://dev.azure.com
+2. Sign in with your Microsoft account.
+3. Click “New Organization” (if not already created).
+4. Inside the organization, click “New Project”.
+5. Enter:
+   - Project Name
+   - Visibility (Private/Public)
+6. Click “Create”.
+
+--------------------------------------------------
+PART 2: CREATE CI PIPELINE
+--------------------------------------------------
+1. Go to your project dashboard.
+2. Click “Pipelines” → “Pipelines”.
+3. Click “New Pipeline”.
+4. Select “GitHub”.
+5. Authorize Azure DevOps to access your GitHub account.
+6. Select your repository.
+7. Choose “Maven” template.
+8. Review the generated azure-pipelines.yml file.
+9. Ensure Maven goals include:
+   clean install
+10. Click “Save and Run”.
+11. Commit the pipeline YAML file to your repo.
+
+RESULT:
+- CI pipeline created
+- azure-pipelines.yml added to repository
+
+--------------------------------------------------
+PART 3: VERIFY BUILD
+--------------------------------------------------
+1. Go to Pipelines dashboard.
+2. Click on the running pipeline.
+3. Check logs for:
+   - Build success
+   - Test results
+4. Fix errors if any.
+
+--------------------------------------------------
+PART 4: OPTIONAL TASKS
+--------------------------------------------------
+- Add test steps
+- Publish artifacts
+- Deploy to Azure services (App Service, AKS, etc.)
+
+--------------------------------------------------
+PART 5: CREATE SELF-HOSTED AGENT
+--------------------------------------------------
+1. Go to “Project Settings”.
+2. Click “Agent Pools”.
+3. Click “Add Pool”.
+4. Name the pool (e.g., TestAgent).
+5. Open the pool → Click “New Agent”.
+6. Download the agent package.
+
+--------------------------------------------------
+PART 6: CONFIGURE AGENT (ON YOUR MACHINE)
+--------------------------------------------------
+1. Extract the downloaded zip.
+2. Open command prompt in that folder.
+3. Run:
+   config.cmd
+
+4. Enter:
+   - Organization URL
+   - Personal Access Token (PAT)
+   - Agent Pool Name
+   - Agent Name
+
+--------------------------------------------------
+PART 7: CREATE PERSONAL ACCESS TOKEN (PAT)
+--------------------------------------------------
+1. Click profile icon (top right in Azure DevOps).
+2. Select “Personal Access Tokens”.
+3. Click “New Token”.
+4. Give permissions:
+   - Agent Pools (Read & Manage)
+5. Copy the token.
+
+--------------------------------------------------
+PART 8: RUN AGENT
+--------------------------------------------------
+1. Run:
+   run.cmd
+2. Agent will connect to Azure DevOps.
+
+--------------------------------------------------
+PART 9: VERIFY AGENT
+--------------------------------------------------
+1. Go back to Agent Pools.
+2. Open your pool.
+3. Confirm agent status shows “Online”.
+
+--------------------------------------------------
+DONE
+--------------------------------------------------
+You now have:
+- A working CI pipeline using Maven
+- A self-hosted agent connected to Azure DevOps
+
+
+my-app/
+│
+├── pom.xml
+├── src/
+│   ├── main/
+│   │   └── java/
+│   │       └── com/example/Main.java
+│   │
+│   └── test/
+│       └── java/
+│           └── com/example/MainTest.java
+
+
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 
+         http://maven.apache.org/xsd/maven-4.0.0.xsd">
+
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>com.example</groupId>
+    <artifactId>simple-app</artifactId>
+    <version>1.0</version>
+
+</project>
+
+src/main/java/com/example/Main.java
+
+package com.example;
+
+public class Main {
+    public static void main(String[] args) {
+        System.out.println("Hello, Maven!");
+    }
+}
+
+mvn compile
+mvn exec:java -Dexec.mainClass="com.example.Main"
+
+9th
+
+AIM:
+To build a Maven-based Spring Boot project and automate regression testing using Azure DevOps pipeline to ensure continuous integration and testing.
+
+---
+
+## STEP 1: INSTALL REQUIRED SOFTWARE
+
+1. Install Java JDK (17 or above)
+2. Install Apache Maven
+3. Install Visual Studio Code
+
+---
+
+## STEP 2: INSTALL EXTENSIONS IN VS CODE
+
+1. Extension Pack for Java
+2. Spring Boot Extension Pack
+
+---
+
+## STEP 3: CREATE SPRING BOOT PROJECT
+
+1. Open VS Code
+2. Press Ctrl + Shift + P
+3. Select "Spring Initializr"
+4. Choose:
+
+   * Project: Maven
+   * Language: Java
+   * Spring Boot: Latest version
+5. Enter:
+
+   * Group: com.example
+   * Artifact: demo
+6. Add Dependencies:
+
+   * Spring Web
+   * Thymeleaf
+   * Spring Boot DevTools
+7. Generate the project
+
+---
+
+## STEP 4: PROJECT STRUCTURE
+
+demo/
+├── src/main/java/com/example/demo/
+│    ├── DemoApplication.java
+│    └── HelloController.java
+│
+├── src/main/resources/templates/
+│    ├── home.html
+│    └── success.html
+│
+├── src/test/java/com/example/demo/
+│    └── HelloControllerTest.java
+│
+└── pom.xml
+
+---
+
+## STEP 5: ADD APPLICATION CODE
+
+DemoApplication.java
+
+package com.example.demo;
+
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+
+@SpringBootApplication
+public class DemoApplication {
+public static void main(String[] args) {
+SpringApplication.run(DemoApplication.class, args);
+}
+}
+
+---
+
+HelloController.java
+
+package com.example.demo;
+
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.*;
+
+@Controller
+public class HelloController {
+
+```
+@GetMapping("/")
+public String home() {
+    return "home";
+}
+
+@PostMapping("/greet")
+public String greet(@RequestParam String name, Model model) {
+    if (name.equals("admin")) {
+        return "redirect:/success";
+    } else {
+        model.addAttribute("error", "Invalid User");
+        return "home";
+    }
+}
+
+@GetMapping("/success")
+public String success() {
+    return "success";
+}
+```
+
+}
+
+---
+
+home.html
+
+<html>
+<body>
+<h2>Home Page</h2>
+<form action="/greet" method="post">
+    <input type="text" name="name"/>
+    <button type="submit">Submit</button>
+</form>
+<p th:text="${error}"></p>
+</body>
+</html>
+
+---
+
+success.html
+
+<html>
+<body>
+<h2>Welcome Admin</h2>
+</body>
+</html>
+
+---
+
+HelloControllerTest.java
+
+package com.example.demo;
+
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
+
+import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
+import org.springframework.test.web.servlet.MockMvc;
+
+@WebMvcTest(HelloController.class)
+public class HelloControllerTest {
+
+```
+@Autowired
+private MockMvc mockMvc;
+
+@Test
+public void testSuccess() throws Exception {
+    mockMvc.perform(post("/greet")
+            .param("name", "admin"))
+            .andExpect(status().is3xxRedirection())
+            .andExpect(redirectedUrl("/success"));
+}
+
+@Test
+public void testFailure() throws Exception {
+    mockMvc.perform(post("/greet")
+            .param("name", "user"))
+            .andExpect(status().isOk())
+            .andExpect(view().name("home"))
+            .andExpect(model().attributeExists("error"));
+}
+```
+
+}
+
+---
+
+## STEP 6: CONFIGURE pom.xml
+
+<dependencies>
+
+```
+<!-- Spring Boot Web -->
+<dependency>
+    <groupId>org.springframework.boot</groupId>
+    <artifactId>spring-boot-starter-web</artifactId>
+</dependency>
+
+<!-- Thymeleaf -->
+<dependency>
+    <groupId>org.springframework.boot</groupId>
+    <artifactId>spring-boot-starter-thymeleaf</artifactId>
+</dependency>
+
+<!-- Testing -->
+<dependency>
+    <groupId>org.springframework.boot</groupId>
+    <artifactId>spring-boot-starter-test</artifactId>
+    <scope>test</scope>
+</dependency>
+```
+
+</dependencies>
+
+---
+
+## STEP 7: RUN PROJECT LOCALLY
+
+Run the following commands:
+
+mvn clean install
+mvn test
+
+---
+
+## STEP 8: CREATE SELF-HOSTED AGENT IN AZURE DEVOPS
+
+1. Login to Azure DevOps
+2. Go to Project Settings → Agent Pools
+3. Click "Add Pool" → Select "Self-hosted"
+4. Name the pool: TestAgent
+5. Open pool → Click "New Agent"
+6. Download agent package
+7. Extract files
+8. Run: config.cmd
+
+Enter:
+
+* Organization URL
+* Personal Access Token (PAT)
+* Agent Pool Name (TestAgent)
+* Agent Name
+
+9. Start agent:
+   run.cmd
+
+10. Verify status = Online
+
+---
+
+## STEP 9: CREATE AZURE PIPELINE
+
+1. Go to Pipelines → New Pipeline
+2. Connect to GitHub or Azure Repos
+3. Select repository
+4. Add YAML file:
+
+azure-pipelines.yml
+
+trigger:
+
+* main
+
+pool:
+name: TestAgent
+
+steps:
+
+* task: Maven@4
+  inputs:
+  mavenPomFile: 'pom.xml'
+  goals: 'clean test'
+  publishJUnitResults: true
+  testResultsFiles: '**/surefire-reports/TEST-*.xml'
+
+---
+
+## STEP 10: EXECUTION
+
+1. Commit and push code to repository
+2. Pipeline triggers automatically
+3. Monitor pipeline:
+
+   * Build logs
+   * Test results
+
+---
+
+## RESULT:
+
+The Maven-based Spring Boot application was successfully built.
+Regression tests were executed automatically using Azure DevOps pipeline.
+Continuous integration and testing were achieved successfully.
+
+---
+
+## END OF EXPERIMENT
+
+
